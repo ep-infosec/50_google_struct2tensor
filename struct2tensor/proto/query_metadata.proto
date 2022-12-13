@@ -1,0 +1,40 @@
+/* Copyright 2019 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+==============================================================================*/
+// Contains messages related to Prensor query metadata.
+syntax = "proto3";
+
+package struct2tensor;
+
+import "tensorflow_metadata/proto/v0/path.proto";
+
+// Information about a proto parsed by a Prensor query.
+// Next TAG to use: 3
+message ParsedProtoInfo {
+  // The fully qualified name of the proto message parsed by the query.
+  string message_name = 1;
+  // All the proto field paths that will be parsed by the query.
+  repeated tensorflow.metadata.v0.Path field_paths = 2;
+}
+
+// Metadata of a PrensorQuery.
+// Next TAG to use: 4
+message QueryMetadata {
+  string message_name = 1 [deprecated = true];
+  repeated string field_paths_to_parse = 2 [deprecated = true];
+  // Contains information about the protos being parsed by the query. There
+  // could be multiple types of protos parsed by a single query (i.e. a
+  // compilation of projections.)
+  repeated ParsedProtoInfo parsed_proto_info = 3;
+}
